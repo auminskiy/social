@@ -1,0 +1,10 @@
+.item {
+    color: wheat;
+}
+.img {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: 5px;
+    border-color: black;
+}
