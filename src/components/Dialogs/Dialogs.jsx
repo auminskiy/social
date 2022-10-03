@@ -3,21 +3,28 @@ import { NavLink } from 'react-router-dom';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import MessageItem from './Message/MessageItem';
+import { sendMessageActionCreator, updateNewMessageBodyActionCreator } from '../../redux/state';
 
 
 
 const Dialogs = (props) => {
 
+    let state = props.store.getState().dialogsPage;
 
-    let dialogsElements = props.state.dialogsData.map (name => <DialogItem key={name.id} id={name.id} name={name.name} />)
-    let messagesElements = props.state.messageData.map (message => <MessageItem key={message.id} message={message.message}/>)
+    let dialogsElements = state.dialogsData.map (name => <DialogItem key={name.id} id={name.id} name={name.name} />)
+    let messagesElements = state.messageData.map (message => <MessageItem key={message.id} message={message.message}/>)
 
-    let newMessageElement = React.createRef();
-    let postMessage = () => {
-        let messageText = newMessageElement.current.value;
-        alert(messageText);
+    let newMessageBody = state.newMessageBody;
+
+    let onSendMessageClick = () => {
+        props.store.dispatch(sendMessageActionCreator());
     }
-   
+
+    let onNewMessageChange = (e) => {
+       let body = e.target.value;
+       props.store.dispatch(updateNewMessageBodyActionCreator(body));
+    }
+
 
     return (
         <div className={s.dialogs}>
@@ -30,8 +37,8 @@ const Dialogs = (props) => {
             {messagesElements}
            
             </div>
-            <textarea className={s.textarea} ref={newMessageElement}></textarea>
-            <button className={s.button} onClick={postMessage}>add message</button>
+           <div><textarea value={newMessageBody} onChange={onNewMessageChange} className={s.textarea}  placeholder="ostav' messagu bez napryaga"></textarea></div> 
+           <div><button className={s.button} onClick={onSendMessageClick}>add message</button></div> 
 
         </div>
     );
