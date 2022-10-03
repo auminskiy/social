@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import  { addPost, updateNewPostText } from './redux/state';
 import { BrowserRouter } from 'react-router-dom';
 import state, {subscribe} from './redux/state';
-import store from './redux/state';
+import store from './redux/reduxStore';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

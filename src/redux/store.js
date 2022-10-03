@@ -12,7 +12,7 @@ rerenderEntireTree  ()  {
 
 _state : {
     sidebar: {},
-messagesPage: {
+dialogsPage: {
 dialogsData : [
     {id:0, name:'user0'},
     {id:1, name:'user1'},
@@ -22,7 +22,7 @@ dialogsData : [
     {id:5, name:'user5'},
   ],
   
-messagesData : [
+  messageData : [
     {id:0, message:'A sickness with no remedy, except the ones inside of me'},
     {id:1, message:'You ever wonder how deep you can sink into nothing at all?'},
     {id:2, message:'Disintegrate.'},
@@ -61,7 +61,7 @@ subscribe  (observer)  {
 dispatch (action) {
 
     this._state.profilePage = profileReducer(this._state.profilePage, action);
-    this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
     this._state.sidebar = sidebarReducer(this._state.sidebar, action);
 
     this._callSubscriber(this._state);
