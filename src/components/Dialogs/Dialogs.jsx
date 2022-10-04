@@ -9,7 +9,7 @@ import { sendMessageActionCreator, updateNewMessageBodyActionCreator } from '../
 
 const Dialogs = (props) => {
 
-    let state = props.store.getState().dialogsPage;
+    let state = props.dialogsPage;
 
     let dialogsElements = state.dialogsData.map (name => <DialogItem key={name.id} id={name.id} name={name.name} />)
     let messagesElements = state.messageData.map (message => <MessageItem key={message.id} message={message.message}/>)
@@ -17,12 +17,12 @@ const Dialogs = (props) => {
     let newMessageBody = state.newMessageBody;
 
     let onSendMessageClick = () => {
-        props.store.dispatch(sendMessageActionCreator());
+        props.sendMessage();
     }
 
     let onNewMessageChange = (e) => {
        let body = e.target.value;
-       props.store.dispatch(updateNewMessageBodyActionCreator(body));
+       props.updateNewMessageBody(body);
     }
 
 
