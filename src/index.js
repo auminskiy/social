@@ -7,12 +7,11 @@ import  { addPost, updateNewPostText } from './redux/store';
 import { BrowserRouter } from 'react-router-dom';
 import state, {subscribe} from './redux/store';
 import store from './redux/reduxStore';
-import  { Provider } from './StoreContext';
+import {Provider} from 'react-redux';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-let rerenderEntireTree = (state) => {
-   
+
     root.render(
        
       <React.StrictMode>
@@ -23,11 +22,7 @@ let rerenderEntireTree = (state) => {
         </BrowserRouter>
       </React.StrictMode>
     );
-    }
-  rerenderEntireTree(store.getState());
-
-  store.subscribe(rerenderEntireTree);
-
+   
 
 
     reportWebVitals();

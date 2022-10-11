@@ -25,12 +25,20 @@ if (action.type === ADD_POST) {
         message: state.newPostText,
         likesCount: 2,
     }
-    state.postsData.push(newPost);
-    state.newPostText = '';
-   
+    let stateCopy = {
+        ...state,
+        postsData : [...state.postsData, newPost],
+        newPostText : '',
+    };
+    
+    return stateCopy;
 } else if (action.type === UPDATE_NEW_POST_TEXT) {
-    state.newPostText = action.newText;
-
+    let stateCopy = {
+        ...state,
+        newPostText : action.newText,
+    };
+    
+return stateCopy;
 }
 return state;
 }
