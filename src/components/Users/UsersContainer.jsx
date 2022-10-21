@@ -6,7 +6,7 @@ import Users from './Users';
 
 let mapStateToProps = (state) => {
     return {
-        usersData: state.usersPage.usersData
+        users: state.usersPage.users
     }
 }
 
@@ -18,8 +18,8 @@ let mapDispatchToProps = (dispatch) => {
         unfollow: (userId) => {
             dispatch(unfollowActionCreator(userId));
         },
-        setUsers: (usersData) => {
-            dispatch(setUsersActionCreator(usersData))
+        setUsers: (users) => {
+            dispatch(setUsersActionCreator(users))
         }
     }
 
