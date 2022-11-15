@@ -8,3 +8,16 @@ border-radius: 50px;
     font-size: 1.4rem;
     font-weight: bold;
 }
+
+.numbers{
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.number{
+    padding: 3px;
+}
+.selectedPage{
+    padding: 5px;
+}
+
