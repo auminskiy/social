@@ -40,4 +40,14 @@ export const unfollowUsers = (userId ) => {
   
 }
 
+export const getProfile = (userId) => {
+  return axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
+}
+
+export const authClientProfile = () => {
+  return axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
+    withCredentials: true
+})
+
+}
 
