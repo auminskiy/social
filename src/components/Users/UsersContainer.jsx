@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
+import { withAuthRedirect } from '../../hoc/authRedirect';
 
 
 
@@ -139,6 +140,8 @@ let mapDispatchToProps = (dispatch) => {
 }
 */
 
+let withRedirect = withAuthRedirect(UsersContainer);
+
 export default connect(mapStateToProps, {
         follow,
         unfollow,
@@ -150,4 +153,4 @@ export default connect(mapStateToProps, {
         getUsers,
     }
 
-    ) (UsersContainer);
+    ) (withRedirect);
