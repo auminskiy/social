@@ -1,10 +1,11 @@
-import { getProfile } from "../api/api";
+import { getProfile, getStatus, updateStatus } from "../api/api";
 import { toggleIsFetching } from "./usersReducer";
 
 
 const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'; 
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 
 let initialState = {
@@ -17,6 +18,7 @@ let initialState = {
         ],
         newPostText: 'hello',
         profile: null,
+        status: '',
         
     
 }
@@ -48,6 +50,13 @@ switch(action.type) {
         profile : action.profile,
     }
 }
+
+case SET_STATUS: {
+    return {
+        ...state,
+        status : action.status,
+    }
+}
 default:
 return state;
 }
@@ -56,6 +65,7 @@ return state;
 export const addPostActionCreator = () => ({type: ADD_POST})
 export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+export const setStatus = (status) => ({type: SET_STATUS, status})
 
 export const getUserProfile = (userId) => {
     return (dispatch) => {
@@ -65,6 +75,25 @@ export const getUserProfile = (userId) => {
     
 }
 }
+
+export const getUserStatus = (userId) => {
+    return (dispatch) => {
+        getStatus(userId).then(response=> {
+            dispatch(setStatus(response.data));
+           });
+    
+}
+}
+
+export const updateUserStatus = (status) => (dispatch) => {
+        updateStatus(status).then(response=> {
+            console.log(response.data.resultCode)
+            if (response.data.resultCode === 0) {
+            dispatch(setStatus(status)); }
+           });
+    
+}
+
 
 
 

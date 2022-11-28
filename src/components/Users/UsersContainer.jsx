@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
 import { withAuthRedirect } from '../../hoc/authRedirect';
+import { compose } from 'redux';
 
 
 
@@ -140,9 +141,10 @@ let mapDispatchToProps = (dispatch) => {
 }
 */
 
-let withRedirect = withAuthRedirect(UsersContainer);
 
-export default connect(mapStateToProps, {
+export default compose(
+    withAuthRedirect,
+    connect(mapStateToProps, {
         follow,
         unfollow,
         setUsers,
@@ -151,6 +153,6 @@ export default connect(mapStateToProps, {
         toggleIsFetching,
         toggleFollowingInProgress,
         getUsers,
-    }
+    })
+) (UsersContainer)
 
-    ) (withRedirect);
