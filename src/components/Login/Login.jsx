@@ -9,6 +9,11 @@ import { connect } from 'react-redux';
 
 const Login = (props) => {
 
+    
+  if (props.isAuth) {
+    
+    return <Navigate to={'/users'} />
+}
     return    <div>
         <h2>Login Please</h2>
         <Formik
@@ -27,10 +32,8 @@ const Login = (props) => {
           onSubmit={(values) => 
             
             props.login(values.email, values.password, values.rememberMe)
-           
-            
-        } 
-     
+                      
+        }  
             validationSchema={loginFormSchema}>
                 
             {() => (
@@ -56,20 +59,12 @@ const Login = (props) => {
         </Formik>
        
     </div>
-
-
                 }
 
 
-const LoginNav = (props) => {
- 
- 
-  if (props.isAuth) {
-    
-        return <Navigate to={'/users'} />
-  }
- return <Login/>
-}
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth
+})
 
-export default connect (null, {login}) (LoginNav);
+export default connect (mapStateToProps, {login}) (Login);
 
