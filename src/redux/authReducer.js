@@ -21,7 +21,7 @@ switch (action.type) {
     return {
         ...state,
         ...action.data,
-        isAuth: true,
+       
         }
     
     default:
@@ -31,9 +31,8 @@ switch (action.type) {
 
 export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, data: {userId, email, login, isAuth}})
 
-export const authProfile = () => {
-    return (dispatch) => {
-        authClientProfile() .then(response => {
+export const authProfile = () => (dispatch) => {
+     return   authClientProfile() .then(response => {
             console.log(response.data)
            if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data;
@@ -43,16 +42,18 @@ export const authProfile = () => {
         });
     
 }
-}
 
-export const login = (email, password, rememberMe) => {
+
+export const login = (email, password, rememberMe, setStatus) => {
     return (dispatch) => {
         clientLogin(email, password, rememberMe) .then(response => {
             console.log(response.data)
            if (response.data.resultCode === 0) {
           
             dispatch(authProfile());
-           }
+           }  else {
+            setStatus(response.data.messages) 
+        }
      
         });
     

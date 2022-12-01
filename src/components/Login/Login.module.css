@@ -1,0 +1,13 @@
+.error{
+    color: brown;
+text-shadow: coral;
+
+
+}
+.field{
+    background-color: bisque;
+}
+
+.err{
+    border: solid red 2px;
+}

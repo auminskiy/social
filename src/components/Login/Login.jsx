@@ -4,7 +4,8 @@ import loginFormSchema from './LoginFormShema';
 import  {login}  from '../../redux/authReducer';
 import { Navigate } from "react-router-dom";
 import { connect } from 'react-redux';
-
+import s from './Login.module.css';
+import classnames from 'classnames';
 
 
 const Login = (props) => {
@@ -12,7 +13,7 @@ const Login = (props) => {
     
   if (props.isAuth) {
     
-    return <Navigate to={'/users'} />
+    return <Navigate to={'/profile'} />
 }
     return    <div>
         <h2>Login Please</h2>
@@ -29,31 +30,36 @@ const Login = (props) => {
                 }
                 return errors;
             }}
-          onSubmit={(values) => 
+          onSubmit={(values, {setStatus}) => 
             
-            props.login(values.email, values.password, values.rememberMe)
-                      
+            props.login(values.email, values.password, values.rememberMe, setStatus)
+                 
         }  
             validationSchema={loginFormSchema}>
                 
-            {() => (
+            {({ errors, touched, isValid, dirty, status }) => (
                 <Form>
+                    <div> 
                     <div>
-                        <Field type={'text'} name={'email'} placeholder={'e-mail'}/>
+                        <Field className={classnames(s.field, {[s.err]: touched.email && errors.email })} type={'text'} name={'email'} placeholder={'e-mail'}/>
                     </div>
-                    <ErrorMessage name="email" component="div"/>
-
+                  
+                    {touched.email && errors.email && (
+                    <div className={s.error}>{errors.email}</div>)}
                     <div>
-                        <Field type={'password'} name={'password'} placeholder={'password'}/>
+                        <Field className={classnames(s.field, {[s.err]: touched.password && errors.password })} type={'password'} name={'password'} placeholder={'password'}/>
                     </div>
-                    <ErrorMessage name="password" component="div"/>
-
+                    {touched.password && errors.password && (
+                    <div className={s.error}>{errors.password}</div>)}
+                    
+                    <div className={s.error}>{status}</div>
                     <div>
                         <Field type={'checkbox'} name={'rememberMe'}/>
                         <label htmlFor={'rememberMe'}> remember me </label>
                     </div>
 
                     <button type={'submit'}>Log in</button>
+                    </div>
                 </Form>
             )}
         </Formik>
