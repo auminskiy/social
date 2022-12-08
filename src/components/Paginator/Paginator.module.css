@@ -1,0 +1,20 @@
+.photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    }
+    
+    .pageNumber.selectedPage{
+        
+        font-weight: bold;
+    }
+    
+    .paginator{
+        cursor: pointer;
+       margin: 30px;
+       
+    }
+    .pageNumber {
+        padding: 5px;
+        border: .7px solid snow;
+    }

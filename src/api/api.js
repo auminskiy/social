@@ -64,4 +64,7 @@ export const updateStatus = (status) => {
   return instance.put('https://social-network.samuraijs.com/api/1.0/profile/status',  {status: status})
 }
 
+export const uploadPhotos = (formData) => {
+  return instance.put('https://social-network.samuraijs.com/api/1.0/profile/photo', formData,  {headers: {'Content-Type':'multipart/form-data'}})
+}
  

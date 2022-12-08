@@ -31,22 +31,18 @@ switch (action.type) {
 
 export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, data: {userId, email, login, isAuth}})
 
-export const authProfile = () => (dispatch) => {
-     return   authClientProfile() .then(response => {
+export const authProfile = () => async (dispatch) => {
+     let response = await authClientProfile(); 
             console.log(response.data)
            if (response.data.resultCode === 0) {
             let {id, email, login} = response.data.data;
             dispatch(setAuthUserData(id, email, login, true));
            }
-     
-        });
-    
 }
 
 
-export const login = (email, password, rememberMe, setStatus) => {
-    return (dispatch) => {
-        clientLogin(email, password, rememberMe) .then(response => {
+export const login = (email, password, rememberMe, setStatus) =>  async (dispatch) => {
+        let response = await clientLogin(email, password, rememberMe) 
             console.log(response.data)
            if (response.data.resultCode === 0) {
           
@@ -54,25 +50,18 @@ export const login = (email, password, rememberMe, setStatus) => {
            }  else {
             setStatus(response.data.messages) 
         }
-     
-        });
-    
-}
 }
 
-export const logout = () => {
-    return (dispatch) => {
-        clientLogout() .then(response => {
+
+export const logout = () => async (dispatch) => {
+    let response = await clientLogout() 
             console.log(response.data)
            if (response.data.resultCode === 0) {
           
             dispatch(setAuthUserData(null, null, null, false));
-           }
-     
-        });
-    
+           }  
 }
-}
+
 
 
 export default authReducer;

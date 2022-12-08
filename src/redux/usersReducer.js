@@ -80,44 +80,44 @@ export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFe
 export const toggleFollowingInProgress = (isFetching, userId) => ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId})
 
 export const getUsers = (currentPage, pageSize) => {
-return (dispatch) => {
+return async (dispatch) => {
     dispatch(toggleIsFetching(true));
 
-    getUsersApi(currentPage, pageSize).then(data => {
+    let data = await getUsersApi(currentPage, pageSize)
+    
         dispatch(setCurrentPage(currentPage));
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
         console.log(data.items)
         dispatch(setTotalUsersCount(data.totalCount));
        
-    });
+    
 }
 }
 
 export const follow = (userId) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleFollowingInProgress(true, userId));
-        followUsers(userId).then(data => {
+        let data = await followUsers(userId)
               console.log(data)
                 if (data.resultCode === 0) {
                     dispatch(followUserSuccess(userId))
                 }
                 dispatch(toggleFollowingInProgress(false, userId));
-            });
+           
            }}
     
     
 
     export const unfollow = (userId) => {
-        return (dispatch) => {
+        return async (dispatch) => {
             dispatch(toggleFollowingInProgress(true, userId));
-           unfollowUsers(userId).then(data => {
+            let data = await unfollowUsers(userId)
                console.log(data.resultCode)
                  if (data.resultCode === 0) {
                     dispatch(unfollowUserSuccess(userId))
                  }
                  dispatch(toggleFollowingInProgress(false, userId));
-             });
 
              }}
        
