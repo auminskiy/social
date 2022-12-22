@@ -1,4 +1,4 @@
-import { getProfile, getStatus, updateStatus } from "../api/api";
+import { getProfile, getStatus, updateStatus, uploadPhotos, saveProfileForm } from "../api/api";
 import { toggleIsFetching } from "./usersReducer";
 
 
@@ -6,6 +6,8 @@ const ADD_POST = 'ADD_POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'; 
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const SET_PHOTO = 'SET_PHOTO';
+const SET_PROFILE_DATA = 'SET_PROFILE_DATA';
 
 
 let initialState = {
@@ -34,29 +36,46 @@ switch(action.type) {
     }
     return {
         ...state,
-        postsData : [...state.postsData, newPost],
-        newPostText : '',
+        postsData: [...state.postsData, newPost],
+        newPostText: '',
     }
      
 } case UPDATE_NEW_POST_TEXT: {
     return {
         ...state,
-        newPostText : action.newText,
+        newPostText: action.newText,
     }
 
 }  case SET_USER_PROFILE: {
     return {
         ...state,
-        profile : action.profile,
+        profile: action.profile,
     }
 }
 
 case SET_STATUS: {
     return {
         ...state,
-        status : action.status,
+        status: action.status,
     }
 }
+
+case SET_PHOTO: {
+    return {
+        ...state,
+        profile: {...state.profile, photos: action.photos,}
+        
+    }
+}
+
+case SET_PROFILE_DATA: {
+    return {
+        ...state,
+        profile: {...state.profile, photos: action.photos,}
+        
+    }
+}
+
 default:
 return state;
 }
@@ -66,6 +85,8 @@ export const addPostActionCreator = () => ({type: ADD_POST})
 export const updateNewPostTextActionCreator = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 export const setStatus = (status) => ({type: SET_STATUS, status})
+export const setPhoto = (photos) => ({type: SET_PHOTO, photos})
+export const setProfileData = (photos) => ({type: SET_PROFILE_DATA, photos})
 
 export const getUserProfile = (userId) => {
     return (dispatch) => { 
@@ -94,7 +115,26 @@ export const updateUserStatus = (status) => (dispatch) => {
     
 }
 
+export const savePhoto = (file) => async (dispatch) => {
+    let response = await uploadPhotos(file)
+        console.log(response.data.resultCode)
+        if (response.data.resultCode === 0) {
+        dispatch(setPhoto(response.data.data.photos)); 
+    }      
+}
+//fullName, lookingForAJobDescription, aboutMe, contacts, setStatus
 
+export const saveProfile = (profile) =>  async (dispatch) => {
+    let response = await saveProfileForm(profile);
+
+        console.log(response.data)
+        debugger;
+       if (response.data.resultCode === 0) {
+      
+        dispatch(setProfileData());
+       
+}
+}
 
 
 export default profileReducer
